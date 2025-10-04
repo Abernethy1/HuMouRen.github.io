@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>长安非遗传承 - 最终环节</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        /* 全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'KaiTi', 'STKaiti', serif;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        /* 最终环节背景 */
+        .final-page-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            background-image: url('../img/最终环节.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        /* 叠加层，增强文字可读性 */
+        .final-page-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+            z-index: 1;
+        }
+        
+        /* 内容容器 */
+        .final-page-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: #fff;
+            max-width: 800px;
+            padding: 2rem;
+        }
+        
+        /* 标题样式 */
+        .final-page-title {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            font-weight: bold;
+        }
+        
+        /* 描述文字样式 */
+        .final-page-description {
+            font-size: 1.5rem;
+            margin-bottom: 3rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+            line-height: 1.8;
+        }
+        
+        /* 选项区域 */
+        .options-container {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            gap: 5rem;
+            margin-top: 58vh;
+            margin-bottom: 2rem;
+        }
+        
+        .option-box {
+              width: 1000px; /* 保持宽度不变 */
+              height: 120px; /* 长度扩大一倍 */
+              background-color: rgba(222, 213, 196, 0.95); /* 增强背景不透明度 */
+              border: 2px solid #8B4513; /* 棕色边框匹配背景 */
+              border-radius: 5px;
+              padding: 0.8rem 1.5rem; /* 增大内边距 */
+              cursor: pointer;
+              transition: all 0.3s ease;
+              backdrop-filter: blur(2px);
+              display: flex;
+              flex-direction: column;
+             
+              justify-content: center;
+              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+              background-image: url('data:image/svg+xml,%3Csvg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895-2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z" fill="%238B4513" fill-opacity="0.1" fill-rule="evenodd"/%3E%3C/svg%3E');
+          }
+        
+        .option-box:hover {
+            background-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+        }
+        
+        .option-text {
+            font-size: 1.1rem; /* 保持字体大小不变 */
+            color: #5D4037; /* 深棕色文字匹配背景 */
+            text-shadow: none;
+            font-weight: bold;
+            margin-bottom: 0.2rem;
+        }
+        
+        .option-subtext {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.9);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+        }
+        
+        /* 结束按钮样式 */
+        .final-page-button {
+            padding: 1rem 3rem;
+            font-size: 1.2rem;
+            background-color: rgba(255, 255, 255, 0.5);
+            color: #fff;
+            border: 2px solid #fff;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            font-family: 'KaiTi', 'STKaiti', serif;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            font-weight: bold;
+        }
+        
+        .final-page-button:hover {
+            background-color: rgba(255, 255, 255, 0.7);
+            transform: translateY(-3px);
+        }
+        
+        /* 音乐控制按钮 */
+        .music-control {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 10;
+        }
+        
+        .music-toggle-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.2);
+            border: 2px solid #fff;
+            color: #fff;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+        
+        .music-toggle-btn:hover {
+            background-color: rgba(255, 255, 255, 0.4);
+            transform: scale(1.1);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .final-page-title {
+                font-size: 1.5rem;
+            }
+            
+            .final-page-description {
+                font-size: 1.2rem;
+            }
+            
+            .options-container {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+            
+            .option-box {
+                width: 90%;
+                max-width: 300px;
+                min-height: 100px;
+                padding: 1rem;
+            }
+            
+            .option-text {
+                font-size: 1.1rem;
+            }
+            
+            .option-subtext {
+                font-size: 0.9rem;
+            }
+            
+            .final-page-button {
+                padding: 0.8rem 2rem;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="final-page-container">
+        <!-- 背景叠加层 -->
+        <div class="final-page-overlay"></div>
+        
+        <!-- 音乐控制按钮 -->
+        <div class="music-control">
+            <button id="music-toggle" class="music-toggle-btn" title="音乐控制">
+                <i class="fa fa-music music-icon"></i>
+            </button>
+        </div>
+        
+        <!-- 页面内容 -->
+        <div class="final-page-content">
+            <h1 class="final-page-title">历经磨砺，你的技艺已然纯熟。此刻，你面对的最大挑战是什么？</h1>
+            
+            <!-- 选项区域 -->
+            <div class="options-container">
+                <div class="option-box">
+                    <div class="option-text">A. 如何让古老技艺被更多人看见？</div>
+                   
+                </div>
+                <div class="option-box">
+                    <div class="option-text">B. 如何找到真心想学的下一代？</div>
+                    
+                </div>
+                <div class="option-box">
+                    <div class="option-text">C. 如何在现代社会中维持生计？</div>
+                    
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    
+    <!-- 背景音乐 -->
+    <audio id="background-music" loop preload="auto" autoplay muted>
+        <source src="../YingPin/春庭雪.mp3" type="audio/mpeg">
+        您的浏览器不支持音频播放
+    </audio>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // 音乐控制
+        const musicToggle = document.getElementById('music-toggle');
+        const backgroundMusic = document.getElementById('background-music');
+        let isMusicPlaying = false;
+        
+        musicToggle.addEventListener('click', function() {
+            if (isMusicPlaying) {
+                backgroundMusic.muted = true;
+                musicToggle.innerHTML = '<i class="fa fa-music music-icon"></i>';
+            } else {
+                backgroundMusic.muted = false;
+                musicToggle.innerHTML = '<i class="fa fa-volume-up music-icon"></i>';
+            }
+            isMusicPlaying = !isMusicPlaying;
+        });
+        
+        // 返回首页按钮 - 检查元素是否存在
+        const backToHomeButton = document.getElementById('back-to-home');
+        if (backToHomeButton) {
+            backToHomeButton.addEventListener('click', function() {
+                window.location.href = 'loging.html';
+            });
+        }
+        
+        // 页面加载完成后的动画效果
+        window.addEventListener('load', function() {
+            const content = document.querySelector('.final-page-content');
+            content.style.opacity = '0';
+            content.style.transform = 'translateY(20px)';
+            content.style.transition = 'opacity 1s ease, transform 1s ease';
+            
+            setTimeout(() => {
+                content.style.opacity = '1';
+                content.style.transform = 'translateY(0)';
+            }, 300);
+        });
+        
+        // 从URL获取非遗类型参数
+        function getHeritageTypeFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('type') || 'laoqiang'; // 默认返回老腔
+        }
+        
+        // 选项点击事件处理
+        const optionBoxes = document.querySelectorAll('.option-box');
+        
+        optionBoxes.forEach((box, index) => {
+            box.addEventListener('click', function() {
+                // 添加点击效果
+                box.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    box.style.transform = 'translateY(-5px)';
+                }, 100);
+                
+                // 获取非遗类型
+                const heritageType = getHeritageTypeFromURL();
+                
+                // 根据非遗类型和选项索引决定跳转到哪个页面
+                let targetPage = '';
+                
+                if (heritageType === 'piying') {
+                    // 皮影戏选项跳转
+                    switch(index) {
+                        case 0:
+                            targetPage = './piying-a.html'; // 皮影A光影破圈
+                            break;
+                        case 1:
+                            targetPage = './piying-b.html'; // 皮影B师者匠心
+                            break;
+                        case 2:
+                            targetPage = './piying-c.html'; // 皮影C守正不移
+                            break;
+                    }
+                } else {
+                    // 老腔选项跳转（保持原有逻辑）
+                    switch(index) {
+                        case 0:
+                            targetPage = './laoqiang-a.html'; // 老腔A黄河新唱
+                            break;
+                        case 1:
+                            targetPage = './laoqiang-b.html'; // 老腔B血脉传承
+                            break;
+                        case 2:
+                            targetPage = './laoqiang-c.html'; // 老腔C绝唱守望
+                            break;
+                    }
+                }
+                
+                // 跳转到目标页面
+                window.location.href = targetPage;
+            });
+        });
+    </script>
+</body>
+</html>

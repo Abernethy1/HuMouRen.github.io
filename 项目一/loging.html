@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>长安非遗传承</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- 自定义样式 -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- 首页 Loading 界面 -->
+    <div id="loading-page" class="full-screen-container">
+        <!-- 背景视频 -->
+        <div class="video-container">
+            <video class="bg-video" autoplay muted loop playsinline preload="auto">
+                <source src="../video/loading动态.mp4" type="video/mp4">
+                <!-- 如果有其他格式的视频文件，可以添加在这里 -->
+                <!-- <source src="../video/生成长安非遗动态图.webm" type="video/webm"> -->
+            </video>
+            <!-- 视频加载失败时显示的备用背景 -->
+            <div class="video-fallback"></div>
+        </div>
+        
+        <!-- 背景中国风元素 -->
+        <div class="chinese-pattern-top-left"></div>
+        <div class="chinese-pattern-top-right"></div>
+        <div class="chinese-pattern-bottom-left"></div>
+        <div class="chinese-pattern-bottom-right"></div>
+        
+        <div class="loading-content text-center"> 
+            <!-- 古风标题 -->
+            <h1 class="heritage-title mb-6">
+                <span class="title-char">长</span>
+                <span class="title-char">安</span>
+                <span class="title-char">非</span>
+                <span class="title-char">遗</span>
+            </h1>
+            
+            <!-- 古风句子 -->
+            <div id="ancient-sentence" class="ancient-quote mb-8">
+                <div class="quote-symbol">「</div>
+                <p class="sentence-text"></p>
+                <div class="quote-symbol">」</div>
+            </div>
+        </div>
+        
+        <!-- 音乐控制按钮 -->
+        <div id="music-control" class="music-control">
+            <button class="music-toggle-btn" title="音乐控制">
+                <i class="fa fa-music music-icon"></i>
+            </button>
+        </div>
+        
+        <!-- 底部蓝色圆圈提示 -->
+        <div class="bottom-blue-circle">
+            <div class="blue-circle-inner">
+                <p class="blue-circle-text">点击任意处，开启传承之旅</p>
+            </div>
+        </div>
+        
+        <!-- 背景音乐 -->
+        <audio id="background-music" loop preload="auto" autoplay muted>
+            <source src="../YingPin/春庭雪.mp3" type="audio/mpeg">
+            您的浏览器不支持音频播放
+        </audio></audio>
+    </div>
+
+    <!-- 选择非遗门类界面 -->
+    <div id="category-page" class="full-screen-container d-none">
+        <!-- 音乐控制按钮 -->
+        <div id="music-control-category" class="music-control">
+            <button class="music-toggle-btn" title="音乐控制">
+                <i class="fa fa-music music-icon"></i>
+            </button>
+        </div>
+        
+        <div class="category-content" width="100%" height="100%">
+            <div class="category-background"></div>
+            <div class="category-overlay">
+                <p class="heritage-text mb-6">"长安千年，非遗流光。请选择你的传承之路："</p>
+                
+                <div class="category-options">
+                    <!-- 皮影戏选项 -->
+                    <div class="category-item" data-type="piying">
+                        <div class="category-icon">
+                            <img src="../img/皮影头像.jpg" alt="皮影戏" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                        </div>
+                        <div class="category-info">
+                            <h3>皮影戏</h3>
+                            <p>光影之间，演绎古今</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 老腔选项 -->
+                    <div class="category-item" data-type="laoqiang">
+                        <div class="category-icon">
+                            <img src="../img/老腔头像.jpg" alt="老腔" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                        </div>
+                        <div class="category-info">
+                            <h3>老腔</h3>
+                            <p>一声吼尽千古事</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 可以根据需要添加更多非遗选项 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 非遗详情页面 -->
+    <div id="detail-page" class="container d-none py-5">
+        <!-- 音乐控制按钮 -->
+        <div id="music-control-detail" class="music-control-detail">
+            <button class="music-toggle-btn" title="音乐控制">
+                <i class="fa fa-music music-icon"></i>
+            </button>
+        </div>
+        
+        <div class="detail-content">
+            <div id="detail-title" class="text-center mb-8">
+                <h1 class="display-4"></h1>
+            </div>
+            
+            <!-- 按钮和图片布局 -->
+            <div class="btn-image-container" width="100%" height="100%">
+                
+                <!-- 上一页按钮 -->
+                <div class="btn-left-2">
+                    <button id="prev-page" class="btn btn-custom btn-lg" style="display: none;">
+                        <i class="fa fa-arrow-left mr-2"></i> 上一页
+                    </button>
+                </div>
+                
+                <!-- 中央图片和视频 -->
+                <div class="image-center">
+                    <img id="detail-image" class="img-fluid custom-image" src="" alt="老腔展示图">
+                    <video id="detail-video" class="img-fluid custom-video" autoplay muted playsinline preload="auto">
+                        <source src="../video/老腔A黄河新唱.mp4" type="video/mp4">
+                        您的浏览器不支持视频播放
+                    </video>
+                </div>
+                
+                <!-- 重新播放按钮 -->
+                <div class="btn-replay-container">
+                    <button id="replay-video" class="btn btn-custom btn-lg" style="display: none;">
+                        <i class="fa fa-play mr-2"></i> 重新播放
+                    </button>
+                </div>
+                
+                <!-- 下一个按钮 -->
+                <div class="btn-right">
+                    <button id="next-page" class="btn btn-custom btn-lg" style="display: none;">
+                        下一个 <i class="fa fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- 自定义脚本 -->
+    <script src="script.js"></script>
+</body>
+</html>

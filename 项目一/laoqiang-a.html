@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>黄河新唱 - 老腔A</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 基础样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            color: #333;
+            overflow-x: hidden;
+            overflow-y: hidden;
+        }
+        
+        /* 主容器 */
+        .laoqiang-container {
+            position: relative;
+            min-height: 100vh;
+            background-image: url('../img/背景图片.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 2rem;
+        }
+        
+        /* 背景叠加层 */
+        .laoqiang-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+        
+        /* 老腔A黄河新唱图片样式 */
+        .main-image {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+        }
+        
+        .main-image img {
+            max-width: 95%;
+            max-height: 95%;
+            object-fit: contain;
+        }
+        
+        /* 纵向文本容器 */
+        .vertical-text-container {
+            position: absolute;
+            right: 10%;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 2;
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        /* 正文样式 - 纵向排列 */
+        .animated-text {
+            font-size: 1.5rem;
+            color: #fff;
+            text-shadow: 2px 2px 8px rgba(255, 255, 255, 0.5);
+            font-weight: 300;
+            text-align: center;
+            opacity: 0;
+            line-height: 2.5;
+            writing-mode: vertical-rl;
+            text-orientation: upright;
+            letter-spacing: 0.5em;
+        }
+        
+        /* 文字逐个显示效果 */
+        .char {
+            display: inline-block;
+            opacity: 0;
+            transform: translateX(20px);
+            transition: all 0.5s ease;
+        }
+        
+        .char.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        /* 数据贴士样式 - 左侧纵向排列 */
+        .data-tip {
+            position: absolute;
+            left: 10%;
+            top: 10%;
+            transform: translateY(-50%);
+            z-index: 2;
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .data-tip p {
+            font-size: 1.5rem;
+            color: #fff;
+            text-shadow: 2px 2px 8px rgba(255, 255, 255, 0.5);
+            font-weight: 300;
+            text-align: center;
+            opacity: 0;
+            line-height: 2.5;
+            writing-mode: vertical-rl;
+            text-orientation: upright;
+            letter-spacing: 0.5em;
+            margin: 0;
+            animation: fadeInUp 1.6s ease-out;
+            animation-fill-mode: forwards;
+        }
+        
+        .data-tip strong {
+            color: #fff;
+        }
+        
+        /* 结束按钮 */
+        .end-button {
+            position: absolute;
+            bottom: 5%;
+            right: 40%;
+            z-index: 3;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            color: white;
+            width: 140px;
+            height: 70px;
+            border-radius: 35px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            opacity: 0;
+        }
+        
+        .end-button .icon-container {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 8px;
+        }
+        
+        .end-button i {
+            font-size: 18px;
+            color: white;
+        }
+        
+        .end-button span {
+            font-size: 16px;
+            font-weight: 500;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+        }
+        
+        .end-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(50%, -3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .end-button:active {
+            transform: translateX(50%);
+        }
+        
+        /* 动画效果 */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 1024px) {
+            .animated-text {
+                font-size: 1.3rem;
+                letter-spacing: 0.4em;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .vertical-text-container {
+                right: 5%;
+            }
+            
+            .animated-text {
+                font-size: 1.1rem;
+                letter-spacing: 0.3em;
+            }
+            
+            .end-button {
+                bottom: 8rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .vertical-text-container {
+                height: 60vh;
+            }
+            
+            .animated-text {
+                font-size: 0.9rem;
+                letter-spacing: 0.2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="laoqiang-container">
+        <div class="laoqiang-overlay"></div>
+        <!-- 老腔A黄河新唱图片 - 放置在背景图上方 -->
+        <div class="main-image">
+            <img src="../img/老腔A黄河新唱.jpg" alt="老腔A黄河新唱">
+        </div>
+        
+        <!-- 纵向文本容器 -->
+        <div class="vertical-text-container">
+            <div class="animated-text" id="animatedText">
+                你将老腔与摇滚乐融合，在音乐节上引爆全场。年轻的血液注入古老的唱腔，争议与掌声并存。一声吼出，既要震山川，也要穿云霄
+            </div>
+        </div>
+        
+        <!-- 结束按钮 -->
+        <button class="end-button" onclick="window.location.href='end-page.html?type=laoqiang'">
+            <div class="icon-container">
+                <i class="fa fa-check-circle"></i>
+            </div>
+            <span>结束</span>
+        </button>
+        
+        <!-- 数据贴士 - 放置在页面最左端 -->
+        <div class="data-tip">
+            <p><strong>数据贴士：#据文旅报告#</strong> 老腔融合实验作品《长安夜》在B站获得超千万播放，但传统剧目演出场次逐年下降。</p>
+        </div>
+    </div>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- 文字动画脚本 -->
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const animatedText = document.getElementById('animatedText');
+                const endButton = document.querySelector('.end-button');
+                const dataTip = document.querySelector('.data-tip');
+                const dataTipText = dataTip.querySelector('p');
+                
+                // 默认隐藏数据贴士
+                dataTip.style.opacity = '0';
+                
+                // 将右侧文本拆分为单个字符
+                const text = animatedText.textContent;
+                animatedText.innerHTML = '';
+                
+                for (let i = 0; i < text.length; i++) {
+                    const span = document.createElement('span');
+                    span.className = 'char';
+                    span.textContent = text[i];
+                    // 为空格添加特殊处理
+                    if (text[i] === ' ') {
+                        span.innerHTML = '&nbsp;';
+                    }
+                    animatedText.appendChild(span);
+                }
+                
+                // 显示右侧文字容器
+                animatedText.style.animation = 'fadeIn 1s ease-out forwards';
+                
+                // 逐个显示右侧文字
+                const rightChars = document.querySelectorAll('.vertical-text-container .char');
+                rightChars.forEach((char, index) => {
+                    setTimeout(() => {
+                        char.classList.add('visible');
+                    }, 150 + index * 100);
+                });
+                
+                // 先显示右侧文字，3秒后再处理左侧数据贴士
+                setTimeout(() => {
+                    // 准备左侧数据贴士：将文本拆分为单个字符
+                    const tipText = dataTipText.textContent;
+                    dataTipText.innerHTML = '';
+                    
+                    // 保存strong标签的内容和位置
+                    const strongContent = "数据贴士：#据文旅报告#";
+                    const strongIndex = tipText.indexOf(strongContent);
+                    const restText = tipText.substring(strongIndex + strongContent.length);
+                    
+                    // 先添加非strong部分
+                    for (let i = 0; i < strongIndex; i++) {
+                        const span = document.createElement('span');
+                        span.className = 'char';
+                        span.textContent = tipText[i];
+                        if (tipText[i] === ' ') {
+                            span.innerHTML = '&nbsp;';
+                        }
+                        dataTipText.appendChild(span);
+                    }
+                    
+                    // 添加strong部分
+                    const strongSpan = document.createElement('strong');
+                    for (let i = 0; i < strongContent.length; i++) {
+                        const span = document.createElement('span');
+                        span.className = 'char';
+                        span.textContent = strongContent[i];
+                        if (strongContent[i] === ' ') {
+                            span.innerHTML = '&nbsp;';
+                        }
+                        strongSpan.appendChild(span);
+                    }
+                    dataTipText.appendChild(strongSpan);
+                    
+                    // 添加剩余部分
+                    for (let i = 0; i < restText.length; i++) {
+                        const span = document.createElement('span');
+                        span.className = 'char';
+                        span.textContent = restText[i];
+                        if (restText[i] === ' ') {
+                            span.innerHTML = '&nbsp;';
+                        }
+                        dataTipText.appendChild(span);
+                    }
+                    
+                    // 显示左侧数据贴士容器
+                    dataTip.style.animation = 'fadeIn 1s ease-out forwards';
+                    
+                    // 逐个显示左侧文字
+                    const leftChars = dataTipText.querySelectorAll('.char');
+                    leftChars.forEach((char, index) => {
+                        setTimeout(() => {
+                            char.classList.add('visible');
+                        }, 150 + index * 100);
+                    });
+                }, 3000);
+                
+                // 延迟显示结束按钮 - 文字出现后约5秒显示
+                setTimeout(() => {
+                    endButton.style.animation = 'fadeIn 1.5s ease-out forwards';
+                }, 8000);
+            });
+        </script>
+</body>
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>非遗传承 延续长安文脉</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 基础样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            color: #333;
+            overflow-x: hidden;
+        }
+        
+        /* 主容器 */
+        .end-container {
+            position: relative;
+            min-height: 100vh;
+            background-image: url('../img/结束.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+        
+        /* 背景叠加层 */
+        .end-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 1;
+        }
+        
+        /* 内容容器 */
+        .end-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            text-align: center;
+            color: white;
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        /* 标题样式 */
+        .end-title {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+        
+        /* 标语样式 */
+        .end-slogan {
+            font-size: 1.5rem;
+            font-style: italic;
+            margin-bottom: 3rem;
+            color: #f8d09e;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            animation: fadeInUp 1.2s ease-out 0.4s both;
+        }
+        
+        /* 正文样式 */
+        .end-text {
+            font-size: 1.25rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            animation: fadeInUp 1.4s ease-out 0.6s both;
+        }
+        
+        /* 装饰元素 */
+        .decorative-element {
+            width: 150px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #f8d09e, transparent);
+            margin: 2rem auto;
+            animation: fadeInUp 1.6s ease-out 0.8s both;
+        }
+        
+        /* 返回按钮 */
+        .back-button {
+            margin-top: 3rem;
+            padding: 0.75rem 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            color: white;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            font-size: 1.1rem;
+            text-decoration: none;
+            display: inline-block;
+            animation: fadeInUp 1.8s ease-out 1s both;
+        }
+        
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            color: white;
+        }
+        
+        /* 动画效果 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .end-title {
+                font-size: 2.5rem;
+            }
+            
+            .end-slogan {
+                font-size: 1.2rem;
+            }
+            
+            .end-text {
+                font-size: 1.1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .end-title {
+                font-size: 2rem;
+            }
+            
+            .end-container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="end-container">
+        <div class="end-overlay"></div>
+        
+        <div class="end-content">
+            <!-- 老腔内容，默认显示 -->
+            <div id="laoqiang-content" class="heritage-content">
+                <h1 class="end-title">传承老腔 延续长安文脉</h1>
+                <p class="end-slogan">一声吼尽千年事，双手对舞百万兵</p>
+                
+                <div class="decorative-element"></div>
+                
+                <div class="end-text">
+                    <p>老腔不是博物馆里的文物，而是流淌在关中大地上的血脉。它承载着先民的智慧、历史的记忆和文化的基因。</p>
+                    <p>保护老腔，不仅是保存一种艺术形式，更是守护我们共同的精神家园。每一次传唱，都是一次文化的接力；每一次创新，都是一次生命的延续。</p>
+                </div>
+            </div>
+            
+            <!-- 皮影戏相关内容，默认隐藏 -->
+            <div id="piying-content" class="heritage-content" style="display: none;">
+                <h1 class="end-title">传承皮影 守护光影艺术</h1>
+                <p class="end-slogan">灯影之下演春秋，皮偶之间传文明</p>
+                
+                <div class="decorative-element"></div>
+                
+                <div class="end-text">
+                    <p>皮影戏是光与影的艺术，是指尖上的舞蹈。它用生动的形象讲述着古老的故事，传递着中华民族的审美情趣和价值观念。</p>
+                    <p>传承皮影，不仅是延续一门手艺，更是守护我们的文化根脉。每一张皮影、每一场演出，都是对传统文化的致敬，也是对未来的期许。</p>
+                </div>
+            </div>
+            
+            <a href="loging.html" class="back-button">
+                <i class="fas fa-home"></i> 返回首页
+            </a>
+        </div>
+    </div>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // 获取URL参数
+        function getUrlParams() {
+            const params = {};
+            const urlParams = window.location.search.substring(1).split('&');
+            for (let param of urlParams) {
+                const [key, value] = param.split('=');
+                params[key] = decodeURIComponent(value);
+            }
+            return params;
+        }
+        
+        // 根据非遗类型显示不同内容
+        document.addEventListener('DOMContentLoaded', function() {
+            const params = getUrlParams();
+            const heritageType = params.type || '';
+            
+            if (heritageType === 'piying') {
+                // 显示皮影戏内容，隐藏老腔内容
+                document.getElementById('piying-content').style.display = 'block';
+                document.getElementById('laoqiang-content').style.display = 'none';
+                document.title = '传承皮影 守护光影艺术';
+            } else {
+                // 默认显示老腔内容
+                document.getElementById('laoqiang-content').style.display = 'block';
+                document.getElementById('piying-content').style.display = 'none';
+                document.title = '传承老腔 延续长安文脉';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>师傅考题环节 - 长安非遗传承</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- 自定义样式 -->
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* 师傅楷体环节特有样式 */
+        .master-kaiti-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            background-image: url('../img/师傅考题环节.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .master-kaiti-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.2);
+        }
+        
+        .master-kaiti-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            color: #fff;
+            padding: 20px;
+        }
+        
+        .master-kaiti-title {
+            font-size: 3rem;
+            font-family: 'KaiTi', 'STKaiti', serif;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .master-kaiti-description {
+            font-size: 2.0rem;
+            max-width: 1000px;
+            margin: 60px auto 40px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+        .continue-button {
+            font-size: 1.2rem;
+            padding: 12px 30px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid #fff;
+            color: #fff;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+        
+        .continue-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* 题目样式 */
+        .question-container {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px auto;
+            max-width: 700px;
+            backdrop-filter: blur(10px);
+            display: none;
+        }
+        
+        .question-title {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        .question-options {
+            text-align: left;
+        }
+        
+        .option {
+            display: block;
+            width: 100%;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            color: #fff;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+        
+        .option:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(10px);
+        }
+        
+        .option.correct {
+            background: rgba(0, 255, 0, 0.3);
+            border-color: #0f0;
+        }
+        
+        .option.incorrect {
+            background: rgba(255, 0, 0, 0.3);
+            border-color: #f00;
+        }
+        
+        /* 技能卡弹窗样式 */
+        .skill-card-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            display: none;
+        }
+        
+        .skill-card-content {
+            text-align: center;
+            animation: fadeIn 0.5s ease;
+            position: relative;
+        }
+        
+        .skill-card-image {
+            max-width: 90%;
+            max-height: 70vh;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* 技能卡文本样式 - 绝对定位覆盖在图片上方 */
+        .skill-card-text {
+            position: absolute;
+            top: 65%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70%;
+            height: 30%;
+            font-family: 'KaiTi', 'STKaiti', serif;
+            font-size: 0.8rem;
+            color: #333;
+            text-align: center;
+            line-height: 1.8;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .skill-card-close {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid #fff;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .skill-card-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        @keyframes rotateAndFadeIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.8) rotateY(0deg);
+            }
+            50% {
+                opacity: 0.7;
+                transform: scale(0.9) rotateY(360deg);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotateY(720deg);
+            }
+        }
+        
+        .skill-card-content {
+            /* 添加透视效果以增强立体旋转感 */
+            perspective: 1000px;
+        }
+        
+        .skill-card-content > * {
+            /* 确保子元素继承3D变换 */
+            transform-style: preserve-3d;
+        }
+        
+        .skill-card-rotate {
+            animation: rotateAndFadeIn 1.5s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- 师傅楷体环节主容器 -->
+    <div class="master-kaiti-container">
+        <div class="master-kaiti-overlay"></div>
+        
+        <!-- 音乐控制按钮 -->
+        <div id="music-control-kaiti" class="music-control">
+            <button class="music-toggle-btn" title="音乐控制">
+                <i class="fa fa-music music-icon"></i>
+            </button>
+        </div>
+        
+        <div class="master-kaiti-content">
+            <p class="master-kaiti-description">欢迎来到老腔传承的殿堂，在这里你将领略千年文化的魅力。请回答以下问题，证明你对老腔艺术的理解。</p>
+            
+            <!-- 题目容器 -->
+            <div id="question-container" class="question-container">
+                <div id="question-title" class="question-title"></div>
+                <div id="question-options" class="question-options"></div>
+            </div>
+            
+            <!-- 继续按钮（初始隐藏） -->
+            <button id="continue-button" class="continue-button" style="display: none;">
+                继续传承之旅 <i class="fa fa-arrow-right ml-2"></i>
+            </button>
+        </div>
+        
+        <!-- 技能卡弹窗 -->
+        <div id="skill-card-modal" class="skill-card-modal">
+            <button id="skill-card-close" class="skill-card-close">
+                <i class="fa fa-times"></i>
+            </button>
+            <div class="skill-card-content">
+                <img id="skill-card-image" class="skill-card-image" src="../img/技能卡.jpg" alt="技能卡">
+                <!-- 技能卡文本内容（绝对定位覆盖在图片上方） -->
+                <div id="skill-card-text" class="skill-card-text"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 背景音乐 -->
+    <audio id="background-music" loop preload="auto" autoplay>
+        <source src="../YingPin/春庭雪.mp3" type="audio/mpeg">
+        您的浏览器不支持音频播放
+    </audio>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 音乐控制
+            const musicToggleBtn = document.querySelector('.music-toggle-btn');
+            const backgroundMusic = document.getElementById('background-music');
+            
+            if (musicToggleBtn && backgroundMusic) {
+                musicToggleBtn.addEventListener('click', function() {
+                    if (backgroundMusic.paused) {
+                        backgroundMusic.play().catch(e => {
+                            console.log('音乐播放失败:', e);
+                        });
+                    } else {
+                        backgroundMusic.pause();
+                    }
+                });
+            }
+            
+            // 获取URL参数，判断显示老腔还是皮影戏内容
+            const urlParams = new URLSearchParams(window.location.search);
+            const type = urlParams.get('type') || 'piying'; // 默认显示皮影戏内容
+            
+            // 根据类型更新页面描述
+            const descriptionElement = document.querySelector('.master-kaiti-description');
+            
+            if (type === 'laoqiang') {
+                descriptionElement.textContent = '欢迎来到老腔传承的殿堂，在这里你将领略千年文化的魅力。请回答以下问题，证明你对老腔艺术的理解。';
+            } else {
+                descriptionElement.textContent = '欢迎来到皮影戏传承的殿堂，在这里你将领略千年光影艺术的魅力。请回答以下问题，证明你对皮影戏艺术的理解。';
+            }
+            
+            // 考题数据 - 老腔
+            const laoqiangQuestions = [
+                {
+                    id: 1,
+                    text: "陕西老腔起源于以下哪种劳动号子？",
+                    options: [
+                        { id: 'A', text: "农民耕地号子", correct: false },
+                        { id: 'B', text: "船工号子", correct: true },
+                        { id: 'C', text: "矿工号子", correct: false }
+                    ]
+                },
+                {
+                    id: 2,
+                    text: "老腔被称为 \"满台吼\" 是因为？",
+                    options: [
+                        { id: 'A', text: "演员数量多一起喊", correct: false },
+                        { id: 'B', text: "唱腔豪放激昂，常呐喊帮唱", correct: true },
+                        { id: 'C', text: "观众大声叫好", correct: false }
+                    ]
+                }
+            ];
+            
+            // 考题数据 - 皮影戏
+            const piyingQuestions = [
+                {
+                    id: 1,
+                    text: "徒弟可知，皮影选皮有何讲究？请从以下选项中选择：",
+                    options: [
+                        { id: 'A', text: "牛皮，需选用3-5岁秦川青皮，皮质坚韧", correct: true },
+                        { id: 'B', text: "羊皮，轻薄易刻但不易保存", correct: false },
+                        { id: 'C', text: "猪皮，价格低廉但透光性差", correct: false }
+                    ]
+                },
+                {
+                    id: 2,
+                    text: '"推皮走刀"是一种刀子扎着不动，靠推动皮子转动完成皮影雕刻的绝技。"推皮走刀"一刀最细能到？',
+                    options: [
+                        { id: 'A', text: "0.2mm", correct: true },
+                        { id: 'B', text: "2mm", correct: false },
+                        { id: 'C', text: "5mm", correct: false }
+                    ]
+                }
+            ];
+            
+            // 根据类型选择题目
+            const questions = type === 'laoqiang' ? laoqiangQuestions : piyingQuestions;
+            
+            // 获取DOM元素
+            const questionContainer = document.getElementById('question-container');
+            const questionTitle = document.getElementById('question-title');
+            const questionOptions = document.getElementById('question-options');
+            const continueButton = document.getElementById('continue-button');
+            const skillCardModal = document.getElementById('skill-card-modal');
+            const skillCardClose = document.getElementById('skill-card-close');
+            
+            // 跟踪已显示的题目
+            let displayedQuestions = [];
+            let hasAnsweredCorrectly = false;
+            
+            // 获取下一道未显示的题目
+            function getNextQuestion() {
+                // 如果所有题目都已显示，重置已显示列表
+                if (displayedQuestions.length >= questions.length) {
+                    displayedQuestions = [];
+                }
+                
+                // 过滤出未显示的题目
+                const availableQuestions = questions.filter(q => !displayedQuestions.includes(q.id));
+                
+                // 随机选择一道未显示的题目
+                const selectedQuestion = availableQuestions[Math.floor(Math.random() * availableQuestions.length)];
+                
+                // 将选择的题目添加到已显示列表
+                displayedQuestions.push(selectedQuestion.id);
+                
+                return selectedQuestion;
+            }
+            
+            // 显示题目
+            function showQuestion(question) {
+                questionTitle.textContent = question.text;
+                
+                // 清空并添加选项
+                questionOptions.innerHTML = '';
+                question.options.forEach(option => {
+                    const optionElement = document.createElement('button');
+                    optionElement.className = 'option';
+                    optionElement.textContent = `${option.id}. ${option.text}`;
+                    optionElement.dataset.correct = option.correct;
+                    
+                    // 添加选项点击事件
+                    optionElement.addEventListener('click', function() {
+                        checkAnswer(this);
+                    });
+                    
+                    questionOptions.appendChild(optionElement);
+                });
+                
+                // 显示题目容器
+                questionContainer.style.display = 'block';
+            }
+            
+            // 检查答案
+            function checkAnswer(selectedOption) {
+                // 禁用所有选项
+                const allOptions = document.querySelectorAll('.option');
+                allOptions.forEach(option => {
+                    option.disabled = true;
+                    
+                    // 标记正确和错误选项
+                    if (option.dataset.correct === 'true') {
+                        option.classList.add('correct');
+                    } else if (option === selectedOption) {
+                        option.classList.add('incorrect');
+                    }
+                });
+                
+                // 如果选择了正确答案，显示技能卡
+                if (selectedOption.dataset.correct === 'true') {
+                    hasAnsweredCorrectly = true;
+                    showSkillCard();
+                } else {
+                    // 如果选择错误，3秒后切换到另一道题目
+                    setTimeout(() => {
+                        const nextQuestion = getNextQuestion();
+                        showQuestion(nextQuestion);
+                    }, 2000);
+                }
+            }
+            
+            // 皮影戏相关介绍文本
+            const piyingInfo = [
+                "唐代为皮影雏形期，当时称\"影戏\"，多在寺院、宫廷演出，宋代逐渐传入民间，明清达到鼎盛，西安华县皮影被誉为\"中华戏曲之父\"。传说汉文帝时宫女以树叶剪影哄太子，后改用牛皮，遂成皮影雏形。",
+                "中国皮影的国际正式名称叫\"华剧\"，即华县皮影戏曲之意，华县皮影有四绝：一是皮影雕刻作品造诣高，二是演唱功力极深，三是表演者功力精湛，四是华县皮影博大精深，综合艺术水平炉火纯青，堪称为戏曲艺术之绝唱。"
+            ];
+            
+            // 老腔相关介绍文本
+            const laoqiangInfo = [
+                "陕西老腔起源于西汉船工号子，历经演变，清乾隆时盛行于华州。最初是船工逆水拉纤时，一人起头喊号子，众人应和，后融入民间艺术元素逐步成型。",
+                "乐器包含月琴、板胡、大锣等，有独特演奏组合方式。月琴定旋律基调，板胡增添婉转，打击乐器营造磅礴气势，各司其职又配合默契。常演《三国》《列国》等历史战争题材剧目，故事性强。像《出师表》《三英战吕布》等经典情节，被演绎得热血沸腾，让观众仿若置身古战场。"
+            ];
+            
+            // 获取DOM元素
+              const skillCardText = document.getElementById('skill-card-text');
+              
+              // 显示技能卡
+              function showSkillCard() {
+                  // 根据类型选择介绍文本
+                  const infoList = type === 'laoqiang' ? laoqiangInfo : piyingInfo;
+                  const randomText = infoList[Math.floor(Math.random() * infoList.length)];
+                  
+                  // 设置文本内容
+                  skillCardText.textContent = randomText;
+                  
+                  // 先重置技能卡状态
+                  const skillCardContent = document.querySelector('.skill-card-content');
+                  skillCardContent.classList.remove('skill-card-rotate');
+                  
+                  // 强制重绘
+                  void skillCardContent.offsetWidth;
+                  
+                  // 显示技能卡弹窗
+                  skillCardModal.style.display = 'flex';
+                  
+                  // 添加旋转动画类
+                  skillCardContent.classList.add('skill-card-rotate');
+              }
+            
+            // 关闭技能卡
+            skillCardClose.addEventListener('click', function() {
+                skillCardModal.style.display = 'none';
+                // 只有答对题目后才显示继续按钮
+                if (hasAnsweredCorrectly) {
+                    continueButton.style.display = 'inline-block';
+                }
+            });
+            
+            // 继续按钮点击事件
+            if (continueButton) {
+                continueButton.addEventListener('click', function() {
+                    // 跳转到最终环节，并传递非遗类型参数
+                    window.location.href = `final-page.html?type=${type}`;
+                });
+            }
+            
+            // 键盘事件 - 空格键继续
+            document.addEventListener('keydown', function(e) {
+                if (e.code === 'Space' && !continueButton.classList.contains('d-none')) {
+                    window.location.href = `final-page.html?type=${type}`;
+                }
+            });
+            
+            // 初始显示随机题目
+            showQuestion(getNextQuestion());
+        });
+    </script>
+</body>
+</html>
